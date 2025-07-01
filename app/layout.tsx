@@ -3,9 +3,9 @@ import { Inter } from "@next/font/google";
 import LocalFont from "@next/font/local";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
-import Particles from "./components/particles";
 import { SpotlightCursor } from "./components/spotlight-cursor";
 import { DesktopOnly } from "./components/desktop-only";
+import Particles from "./components/particles";
 
 export const metadata: Metadata = {
   title: {
@@ -71,11 +71,11 @@ export default function RootLayout({
       <body className="bg-black">
         <DesktopOnly>
           <SpotlightCursor />
+          <Particles
+            className="absolute inset-0 -z-10 animate-fade-in"
+            quantity={100}
+          />
         </DesktopOnly>
-        <Particles
-          className="absolute inset-0 -z-10 animate-fade-in"
-          quantity={100}
-        />
         <main>
           {children}
         </main>

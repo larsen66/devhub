@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import Particles from "./components/particles";
-import { Carousel } from "./components/carousel";
 import { ContactForm } from "./components/contact-form";
-import { ScrollAnimations, ScrollSection, ContactSection, HeroText } from "./components/scroll-animations";
+import { ScrollSection, ContactSection, HeroText } from "./components/scroll-animations";
 import dynamic from "next/dynamic";
 import { SmoothScroll } from "./components/smooth-scroll";
 import { Sparkles } from "./components/sparkles";
 import { Demo } from "./components/demo";
 import { Testimonials } from "./components/testimonials";
+import DecryptedText from "./components/DecryptedText";
+import InteractiveSelector from "./components/interactive-selector";
 
 const SparklesDynamic = dynamic(() => import("./components/sparkles-dynamic"), {
   ssr: false,
@@ -23,6 +23,15 @@ const navigation = [
 
 export default function Home() {
   const [isAnimating, setIsAnimating] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    setIsDesktop(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,10 +52,19 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-gradient-to-tl from-black via-zinc-600/20 to-black">
       <SmoothScroll />
-      <ScrollAnimations />
+      {/* Mobile-friendly sparkles */}
       <SparklesDynamic
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 md:hidden"
+        size={20}
+        density={200}
+        color="var(--sparkles-color)"
+        background="transparent"
+      />
+      {/* Desktop sparkles */}
+      <SparklesDynamic
+        className="absolute inset-0 -z-10 hidden md:block"
         size={40}
+        density={800}
         color="var(--sparkles-color)"
         background="transparent"
       />
@@ -58,9 +76,14 @@ export default function Home() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-sm duration-500 text-zinc-500 hover:text-zinc-300"
+                  className="text-sm duration-500 text-zinc-500 hover:text-zinc-300 group"
                 >
-                  {item.name}
+                  <DecryptedText
+                    text={item.name}
+                    animateOn={isDesktop ? 'hover' : 'view'}
+                    sequential={true}
+                    className="duration-500 text-zinc-500 group-hover:text-zinc-300"
+                  />
                 </Link>
               ))}
             </ul>
@@ -70,7 +93,7 @@ export default function Home() {
         <div className="hero-line hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
         
         <HeroText delay={0.1} className="py-3.5 px-0.5 z-10">
-          <h1 className="text-4xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-9xl whitespace-nowrap bg-clip-text transition-all ease-out">
+          <h1 className="text-5xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-9xl bg-clip-text transition-all ease-out">
             DevHub
           </h1>
         </HeroText>
@@ -78,28 +101,34 @@ export default function Home() {
         <div className="hero-line hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
         
         <HeroText delay={0.2} className="hero-subtext my-20 text-center">
-          <h2 className="text-sm text-zinc-500">
-            Full-stack development, mobile apps, AI automation & cloud solutions.{" "}
-            <Link
-              target="_blank"
-              href="https://devhub.io"
-              className="underline duration-500 hover:text-zinc-300"
-            >
-              DevHub
-            </Link>{" "}
-            transforms your ideas into reality.
+          <h2 className="text-lg text-zinc-500 whitespace-pre-wrap">
+            <DecryptedText
+              text={"Full-stack development, mobile apps, AI automation & cloud solutions."}
+              animateOn="view"
+              sequential={true}
+              maxIterations={0}
+              speed={50}
+            />
+            {"\n"}
+            <DecryptedText
+              text={"DevHub transforms your ideas into reality."}
+              animateOn="view"
+              sequential={true}
+              maxIterations={0}
+              speed={60}
+            />
           </h2>
         </HeroText>
       </div>
       <div className="py-16 md:py-24">
-        <Demo />
+        <Demo isDesktop={isDesktop} />
       </div>
       <div id="projects">
         <ScrollSection className="relative z-10 -mt-32 w-full flex flex-col items-center justify-center pb-40">
           <h2 className="pb-20 pt-0 z-10 text-3xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-4xl md:text-5xl whitespace-nowrap bg-clip-text">
             Projects
           </h2>
-          <Carousel autoplay loop baseWidth={600} baseHeight={400} />
+          <InteractiveSelector isDesktop={isDesktop} />
         </ScrollSection>
       </div>
 

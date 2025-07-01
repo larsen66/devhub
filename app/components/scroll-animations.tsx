@@ -1,10 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-
-export const ScrollAnimations: React.FC = () => {
-  return null;
-};
 
 // Простая секция с плавным появлением
 export const ScrollSection: React.FC<{ 

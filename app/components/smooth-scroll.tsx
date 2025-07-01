@@ -1,8 +1,20 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const SmoothScroll: React.FC = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+
   useEffect(() => {
+    const checkIsDesktop = () => {
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsDesktop(!hasTouch);
+    };
+    checkIsDesktop();
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+
     let rafId: number;
     let currentScrollY = window.scrollY;
     let targetScrollY = window.scrollY;
@@ -118,7 +130,7 @@ export const SmoothScroll: React.FC = () => {
         cancelAnimationFrame(rafId);
       }
     };
-  }, []);
+  }, [isDesktop]);
 
   return null;
 };

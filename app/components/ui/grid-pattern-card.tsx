@@ -7,11 +7,13 @@ import { GlowingEffect } from "./glowing-effect"
 interface GridPatternCardProps {
 	children: React.ReactNode
 	className?: string
+	isDesktop?: boolean
 }
 
 export function GridPatternCard({
 	children,
 	className,
+	isDesktop,
 }: GridPatternCardProps) {
 	return (
 		<motion.div
@@ -25,13 +27,14 @@ export function GridPatternCard({
 			initial={{ opacity: 0, y: -20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.8, ease: "easeOut" }}
-			whileHover={{ scale: 1.03 }}
+			whileHover={isDesktop ? { scale: 1.03 } : {}}
 		>
 			<div className="relative h-full rounded-lg border border-white/10 p-1 md:rounded-xl md:p-2">
 				<GlowingEffect
 					spread={40}
 					glow={true}
 					disabled={false}
+					autoplay={!isDesktop}
 					proximity={64}
 					inactiveZone={0.01}
 					borderWidth={3}

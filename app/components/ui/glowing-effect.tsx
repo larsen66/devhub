@@ -13,6 +13,7 @@ interface GlowingEffectProps {
   glow?: boolean;
   className?: string;
   disabled?: boolean;
+  autoplay?: boolean;
   movementDuration?: number;
   borderWidth?: number;
 }
@@ -28,6 +29,7 @@ const GlowingEffect = memo(
     movementDuration = 2,
     borderWidth = 1,
     disabled = true,
+    autoplay = false,
   }: GlowingEffectProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const lastPosition = useRef({ x: 0, y: 0 });
@@ -98,7 +100,23 @@ const GlowingEffect = memo(
     );
 
     useEffect(() => {
-      if (disabled) return;
+      if (!autoplay || !containerRef.current) return;
+
+      const element = containerRef.current;
+      const controls = animate(0, 360, {
+        duration: 10,
+        repeat: Infinity,
+        ease: "linear",
+        onUpdate: (value) => {
+          element.style.setProperty("--start", String(value));
+        },
+      });
+
+      return () => controls.stop();
+    }, [autoplay]);
+
+    useEffect(() => {
+      if (disabled || autoplay) return;
 
       const handleScroll = () => handleMove();
       const handlePointerMove = (e: PointerEvent) => handleMove(e);
@@ -115,7 +133,7 @@ const GlowingEffect = memo(
         window.removeEventListener("scroll", handleScroll);
         document.body.removeEventListener("pointermove", handlePointerMove);
       };
-    }, [handleMove, disabled]);
+    }, [handleMove, disabled, autoplay]);
 
     return (
       <>
