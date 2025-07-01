@@ -6,7 +6,6 @@ const testimonials: TestimonialCardProps[] = [
     author: {
       name: "Giorgi Kapanadze",
       handle: "@giorgi.kapanadze",
-      avatarUrl: "",
     },
     text: "This is the best service I have ever used. Highly recommended!",
   },
@@ -14,7 +13,6 @@ const testimonials: TestimonialCardProps[] = [
     author: {
       name: "Ani Vardanyan",
       handle: "@ani.vardanyan",
-      avatarUrl: "",
     },
     text: "Amazing experience! The team was very supportive and exceeded my expectations.",
   },
@@ -22,7 +20,6 @@ const testimonials: TestimonialCardProps[] = [
     author: {
       name: "Ivan Petrov",
       handle: "@ivan.petrov",
-      avatarUrl: "",
     },
     text: "A game-changer for our business. We've seen a significant improvement.",
   },
@@ -30,7 +27,6 @@ const testimonials: TestimonialCardProps[] = [
     author: {
       name: "Nino Beridze",
       handle: "@nino.beridze",
-      avatarUrl: "",
     },
     text: "Incredible value and top-notch quality. A very satisfied customer.",
   },
@@ -38,7 +34,6 @@ const testimonials: TestimonialCardProps[] = [
     author: {
         name: "Hakob Hakobyan",
         handle: "@hakob.hakobyan",
-        avatarUrl: "",
     },
     text: "The platform is intuitive and easy to use. It streamlined our workflow.",
   },
@@ -46,7 +41,6 @@ const testimonials: TestimonialCardProps[] = [
     author: {
         name: "Elena Smirnova",
         handle: "@elena.smirnova",
-        avatarUrl: "",
     },
     text: "I'm impressed by the level of innovation and continuous updates.",
   },

@@ -1,11 +1,9 @@
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 export interface TestimonialAuthor {
   name: string
   handle: string
-  avatarUrl: string
   href?: string
 }
 
@@ -26,15 +24,8 @@ export function TestimonialCard({
     <div className="flex items-center gap-4">
       <div className="flex flex-col">
         <p className="font-semibold text-foreground text-xs whitespace-normal">{author.name}</p>
+        <p className="text-muted-foreground text-xs whitespace-normal">{author.handle}</p>
       </div>
-      <Image
-        src={author.avatarUrl}
-        alt={author.name}
-        width={48}
-        height={48}
-        className="rounded-full"
-        loading="lazy"
-      />
     </div>
   )
 
