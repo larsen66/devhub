@@ -12,16 +12,15 @@ export const metadata: Metadata = {
     default: "DevHub",
     template: "%s | DevHub",
   },
-  description: "Co-founder of unkey.dev and founder of planetfall.io",
+  description: "DevHub - Transforming ideas into high-performance web and mobile applications.",
   openGraph: {
     title: "DevHub",
-    description:
-      "Co-founder of unkey.dev and founder of planetfall.io",
-    url: "https://chronark.com",
+    description: "DevHub - Transforming ideas into high-performance web and mobile applications.",
+    url: "devhub.ge",
     siteName: "DevHub",
     images: [
       {
-        url: "https://chronark.com/og.png",
+        url: "devhub.ge/og.png",
         width: 1920,
         height: 1080,
       },
