@@ -8,24 +8,19 @@ export const ScrollSection: React.FC<{
   className?: string;
 }> = ({ children, className = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    once: true,
-    amount: 0.1
-  });
+  // Анимация отключена для оптимизации
+  // const isInView = useInView(ref, { 
+  //   once: true,
+  //   amount: 0.1
+  // });
 
   return (
-    <motion.div
+    <div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ 
-        duration: 0.6,
-        ease: "easeOut"
-      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
@@ -35,24 +30,19 @@ export const ContactSection: React.FC<{
   className?: string;
 }> = ({ children, className = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    once: true,
-    amount: 0.1
-  });
+  // Анимация отключена для оптимизации
+  // const isInView = useInView(ref, { 
+  //   once: true,
+  //   amount: 0.1
+  // });
 
   return (
-    <motion.div
+    <div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ 
-        duration: 0.8,
-        ease: "easeOut"
-      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

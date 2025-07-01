@@ -121,20 +121,8 @@ export const Carousel = ({ // Changed from export default function Carousel
 
   useEffect(() => {
     if (autoplay && (!pauseOnHover || !isHovered)) {
-      const timer = setInterval(() => {
-        setCurrentIndex((prev) => {
-          // If at the last original item and looping, go to the clone.
-          if (prev === items.length - 1 && loop) {
-            return prev + 1;
-          }
-          // If at the last item (or clone if looping), loop back to start or stay.
-          if (prev === carouselItems.length - 1) {
-            return loop ? 0 : prev;
-          }
-          return prev + 1;
-        });
-      }, autoplayDelay);
-      return () => clearInterval(timer);
+      // Автопроигрывание отключено для оптимизации
+      return;
     }
   }, [
     autoplay,
@@ -296,6 +284,9 @@ const CarouselItemCard = ({
         </div>
         <p className="text-sm text-zinc-300">{item.description}</p>
       </div>
+      {item.imageUrl && (
+        <Image src={item.imageUrl} alt={item.title} layout="fill" objectFit="cover" loading="lazy" />
+      )}
     </div>
   );
 }; 

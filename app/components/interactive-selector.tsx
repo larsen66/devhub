@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaReact, FaMobileAlt, FaPalette } from 'react-icons/fa';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Project {
   id: number;
@@ -74,7 +75,9 @@ const options: Project[] = DEFAULT_PROJECTS.map((project, index) => {
 const ProjectCard = ({ project }: { project: Project }) => (
     <Link href={project.link} target="_blank" rel="noopener noreferrer" className="block w-full max-w-sm mx-auto">
         <div className="bg-zinc-900/50 backdrop-blur-md border border-zinc-700 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-cyan-500/50 hover:border-cyan-500/50">
-            <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
+            <div className="relative w-full h-48">
+                <Image src={project.image} alt={project.title} layout="fill" objectFit="cover" />
+            </div>
             <div className="p-4">
                 <h3 className="text-xl font-bold text-white">{project.title}</h3>
                 <p className="text-zinc-300 mt-2">{project.description}</p>
@@ -137,11 +140,10 @@ const InteractiveSelector = ({ isDesktop }: { isDesktop: boolean }) => {
           <div
             key={index}
             className={`
-              option relative flex flex-col justify-end overflow-hidden transition-all duration-700 ease-in-out
+              option relative flex flex-col justify-end overflow-hidden transition-[flex,opacity,transform,border,box-shadow] duration-700 ease-in-out
               ${activeIndex === index ? 'active' : ''}
             `}
             style={{
-              backgroundImage: `url('${option.image}')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               opacity: animatedOptions.includes(index) ? 1 : 0,
@@ -157,6 +159,13 @@ const InteractiveSelector = ({ isDesktop }: { isDesktop: boolean }) => {
             }}
             onClick={() => handleOptionClick(index)}
           >
+            <Image
+                src={option.image}
+                alt={option.title}
+                layout="fill"
+                objectFit="cover"
+                className="absolute top-0 left-0 -z-10"
+            />
             <div 
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -196,6 +205,8 @@ const InteractiveSelector = ({ isDesktop }: { isDesktop: boolean }) => {
       
       {/* Custom animations */}
       <style jsx>{`
+        /* Анимации отключены для оптимизации */
+        /*
         @keyframes slideFadeIn {
           0% {
             opacity: 0;
@@ -231,6 +242,7 @@ const InteractiveSelector = ({ isDesktop }: { isDesktop: boolean }) => {
         .delay-600 {
           animation-delay: 0.6s;
         }
+        */
       `}</style>
     </div>
   );

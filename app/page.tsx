@@ -5,16 +5,18 @@ import React, { useState, useEffect } from "react";
 import { ContactForm } from "./components/contact-form";
 import { ScrollSection, ContactSection, HeroText } from "./components/scroll-animations";
 import dynamic from "next/dynamic";
-import { SmoothScroll } from "./components/smooth-scroll";
 import { Sparkles } from "./components/sparkles";
 import { Demo } from "./components/demo";
-import { Testimonials } from "./components/testimonials";
 import DecryptedText from "./components/DecryptedText";
-import InteractiveSelector from "./components/interactive-selector";
+const Testimonials = dynamic(() => import("./components/testimonials").then(mod => mod.Testimonials), { ssr: false });
+const InteractiveSelector = dynamic(() => import("./components/interactive-selector").then(mod => mod.default), { ssr: false });
 
-const SparklesDynamic = dynamic(() => import("./components/sparkles-dynamic"), {
-  ssr: false,
-});
+const SparklesDynamic = dynamic(
+  () => import("./components/sparkles-dynamic"),
+  {
+    ssr: false,
+  },
+);
 
 const navigation = [
   { name: "Projects", href: "#projects" },
@@ -51,23 +53,24 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-tl from-black via-zinc-600/20 to-black">
-      <SmoothScroll />
-      {/* Mobile-friendly sparkles */}
-      <SparklesDynamic
+      {/* Mobile-friendly sparkles - отключено для мобильных устройств в Hero секции */}
+      {/* <SparklesDynamic
         className="absolute inset-0 -z-10 md:hidden"
         size={20}
-        density={200}
+        density={100}
         color="var(--sparkles-color)"
         background="transparent"
-      />
-      {/* Desktop sparkles */}
+      /> */}
+      {/* Desktop sparkles - отключено для оптимизации */}
+      {/*
       <SparklesDynamic
         className="absolute inset-0 -z-10 hidden md:block"
-        size={40}
-        density={800}
+        size={20}
+        density={80}
         color="var(--sparkles-color)"
         background="transparent"
       />
+      */}
       <div className="hero-section flex flex-col items-center justify-center w-screen h-screen overflow-hidden">
         <HeroText delay={0} className="my-20">
           <nav>
@@ -102,25 +105,13 @@ export default function Home() {
         
         <HeroText delay={0.2} className="hero-subtext my-20 text-center">
           <h2 className="text-lg text-zinc-500 whitespace-pre-wrap">
-            <DecryptedText
-              text={"Full-stack development, mobile apps, AI automation & cloud solutions."}
-              animateOn="view"
-              sequential={true}
-              maxIterations={0}
-              speed={50}
-            />
+            Full-stack development, mobile apps, AI automation & cloud solutions.
             {"\n"}
-            <DecryptedText
-              text={"DevHub transforms your ideas into reality."}
-              animateOn="view"
-              sequential={true}
-              maxIterations={0}
-              speed={60}
-            />
+            DevHub transforms your ideas into reality.
           </h2>
         </HeroText>
       </div>
-      <div className="py-16 md:py-24">
+      <div className="py-10 md:py-24">
         <Demo isDesktop={isDesktop} />
       </div>
       <div id="projects">

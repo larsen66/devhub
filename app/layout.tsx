@@ -5,7 +5,6 @@ import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
 import { SpotlightCursor } from "./components/spotlight-cursor";
 import { DesktopOnly } from "./components/desktop-only";
-import Particles from "./components/particles";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chronark.com"),
@@ -72,10 +71,6 @@ export default function RootLayout({
       <body className="bg-black">
         <DesktopOnly>
           <SpotlightCursor />
-          <Particles
-            className="absolute inset-0 -z-10 animate-fade-in"
-            quantity={100}
-          />
         </DesktopOnly>
         <main>
           {children}

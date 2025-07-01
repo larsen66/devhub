@@ -16,7 +16,7 @@ export function GridPatternCard({
 	isDesktop,
 }: GridPatternCardProps) {
 	return (
-		<motion.div
+		<div
 			className={cn(
 				"border w-full rounded-md overflow-hidden",
 				"bg-black/10 dark:bg-white/5 backdrop-blur-xl",
@@ -24,16 +24,12 @@ export function GridPatternCard({
 				"p-6",
 				className,
 			)}
-			initial={{ opacity: 0, y: -20 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.8, ease: "easeOut" }}
-			whileHover={isDesktop ? { scale: 1.03 } : {}}
 		>
 			<div className="relative h-full rounded-lg border border-white/10 p-1 md:rounded-xl md:p-2">
 				<GlowingEffect
 					spread={40}
 					glow={true}
-					disabled={false}
+					disabled={!isDesktop}
 					autoplay={!isDesktop}
 					proximity={64}
 					inactiveZone={0.01}
@@ -43,7 +39,7 @@ export function GridPatternCard({
 					{children}
 				</div>
 			</div>
-		</motion.div>
+		</div>
 	)
 }
 

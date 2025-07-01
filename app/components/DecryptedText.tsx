@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, memo } from 'react'
 import { motion } from 'framer-motion'
 
 interface DecryptedTextProps {
@@ -16,10 +16,10 @@ interface DecryptedTextProps {
   [key: string]: any; // for ...props
 }
 
-export default function DecryptedText({
+function DecryptedText({
   text,
-  speed = 50,
-  maxIterations = 10,
+  speed = 80,
+  maxIterations = 5,
   sequential = false,
   revealDirection = 'start',
   useOriginalCharsOnly = false,
@@ -33,14 +33,14 @@ export default function DecryptedText({
   const [displayText, setDisplayText] = useState(text)
   const [isHovering, setIsHovering] = useState(false)
   const [isScrambling, setIsScrambling] = useState(false)
-  const [revealedIndices, setRevealedIndices] = useState(new Set<number>())
   const [hasAnimated, setHasAnimated] = useState(false)
+
   const containerRef = useRef<HTMLSpanElement>(null)
+  const animationFrameRef = useRef<number>()
+  const lastUpdateTimeRef = useRef<number>(0)
+  const revealedIndicesRef = useRef<Set<number>>(new Set())
 
   useEffect(() => {
-    let interval: NodeJS.Timeout
-    let currentIteration = 0
-
     const getNextIndex = (revealedSet: Set<number>) => {
       const textLength = text.length
       switch (revealDirection) {
@@ -111,42 +111,56 @@ export default function DecryptedText({
       }
     }
 
+    let currentIteration = 0
+    const animate = (time: number) => {
+      if (!lastUpdateTimeRef.current) lastUpdateTimeRef.current = time
+      const deltaTime = time - lastUpdateTimeRef.current
+
+      if (deltaTime > speed) {
+        if (sequential) {
+          if (revealedIndicesRef.current.size < text.length) {
+            const nextIndex = getNextIndex(revealedIndicesRef.current)
+            revealedIndicesRef.current.add(nextIndex)
+            setDisplayText(shuffleText(text, revealedIndicesRef.current))
+          } else {
+            setIsScrambling(false)
+            setDisplayText(text)
+            if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current)
+            return
+          }
+        } else {
+          setDisplayText(shuffleText(text, revealedIndicesRef.current))
+          currentIteration++
+          if (currentIteration >= maxIterations) {
+            setIsScrambling(false)
+            setDisplayText(text)
+            if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current)
+            return
+          }
+        }
+        lastUpdateTimeRef.current = time
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate)
+    }
+
     if (isHovering) {
       setIsScrambling(true)
-      interval = setInterval(() => {
-        setRevealedIndices((prevRevealed: Set<number>) => {
-          if (sequential) {
-            if (prevRevealed.size < text.length) {
-              const nextIndex = getNextIndex(prevRevealed)
-              const newRevealed = new Set(prevRevealed)
-              newRevealed.add(nextIndex)
-              setDisplayText(shuffleText(text, newRevealed))
-              return newRevealed
-            } else {
-              clearInterval(interval)
-              setIsScrambling(false)
-              return prevRevealed
-            }
-          } else {
-            setDisplayText(shuffleText(text, prevRevealed))
-            currentIteration++
-            if (currentIteration >= maxIterations) {
-              clearInterval(interval)
-              setIsScrambling(false)
-              setDisplayText(text)
-            }
-            return prevRevealed
-          }
-        })
-      }, speed)
+      revealedIndicesRef.current = new Set()
+      lastUpdateTimeRef.current = 0
+      currentIteration = 0
+      animationFrameRef.current = requestAnimationFrame(animate)
     } else {
-      setDisplayText(text)
-      setRevealedIndices(new Set())
       setIsScrambling(false)
+      setDisplayText(text)
+      revealedIndicesRef.current = new Set()
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current)
+      }
     }
 
     return () => {
-      if (interval) clearInterval(interval)
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current)
     }
   }, [
     isHovering,
@@ -160,7 +174,7 @@ export default function DecryptedText({
   ])
 
   useEffect(() => {
-    if (animateOn !== 'view') return
+    if (animateOn !== 'view' || window.innerWidth < 768) return
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry: IntersectionObserverEntry) => {
@@ -208,7 +222,7 @@ export default function DecryptedText({
       <span aria-hidden="true">
         {displayText.split('').map((char, index) => {
           const isRevealedOrDone =
-            revealedIndices.has(index) || !isScrambling || !isHovering
+            revealedIndicesRef.current.has(index) || !isScrambling || !isHovering
 
           return (
             <span
@@ -222,4 +236,6 @@ export default function DecryptedText({
       </span>
     </motion.span>
   )
-} 
+}
+
+export default memo(DecryptedText) 

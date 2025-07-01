@@ -13,6 +13,7 @@ export const Card: React.FC<PropsWithChildren> = ({ children }) => {
 	const mouseY = useSpring(0, { stiffness: 500, damping: 100 });
 
 	function onMouseMove({ currentTarget, clientX, clientY }: any) {
+		if (window.innerWidth < 768) return;
 		const { left, top } = currentTarget.getBoundingClientRect();
 		mouseX.set(clientX - left);
 		mouseY.set(clientY - top);

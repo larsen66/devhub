@@ -62,8 +62,7 @@
   
   html {
     @apply dark;
-    /* Disable default smooth scroll for custom implementation */
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
     overflow-x: hidden;
   }
   

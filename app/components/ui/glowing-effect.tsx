@@ -100,22 +100,13 @@ const GlowingEffect = memo(
     );
 
     useEffect(() => {
-      if (!autoplay || !containerRef.current) return;
-
-      const element = containerRef.current;
-      const controls = animate(0, 360, {
-        duration: 10,
-        repeat: Infinity,
-        ease: "linear",
-        onUpdate: (value) => {
-          element.style.setProperty("--start", String(value));
-        },
-      });
-
-      return () => controls.stop();
+      // Эффект отключен для оптимизации
+      return;
     }, [autoplay]);
 
     useEffect(() => {
+      // Эффект отключен для оптимизации
+      return;
       if (disabled || autoplay) return;
 
       const handleScroll = () => handleMove();

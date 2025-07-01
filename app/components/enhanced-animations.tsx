@@ -5,14 +5,9 @@ import { useRef } from "react";
 // Smooth page transitions
 export const PageTransition: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-    >
+    <div>
       {children}
-    </motion.div>
+    </div>
   );
 };
 
@@ -42,18 +37,16 @@ export const StaggeredContainer: React.FC<{
   className?: string;
 }> = ({ children, className = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  // Анимация отключена для оптимизации
+  // const isInView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
-    <motion.div
+    <div
       ref={ref}
       className={className}
-      variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
@@ -62,28 +55,9 @@ export const StaggeredItem: React.FC<{
   className?: string;
 }> = ({ children, className = "" }) => {
   return (
-    <motion.div className={className} variants={itemVariants}>
+    <div className={className}>
       {children}
-    </motion.div>
-  );
-};
-
-// Parallax scroll effect
-export const ParallaxContainer: React.FC<{ 
-  children: React.ReactNode; 
-  speed?: number;
-  className?: string;
-}> = ({ children, speed = 0.5, className = "" }) => {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, 1000 * speed]);
-
-  return (
-    <motion.div 
-      className={className}
-      style={{ y }}
-    >
-      {children}
-    </motion.div>
+    </div>
   );
 };
 
@@ -94,25 +68,11 @@ export const MagneticButton: React.FC<{
   strength?: number;
 }> = ({ children, className = "", strength = 0.4 }) => {
   return (
-    <motion.div
+    <div
       className={className}
-      whileHover={{ 
-        scale: 1.05,
-        transition: { duration: 0.2, ease: "easeOut" }
-      }}
-      whileTap={{ scale: 0.95 }}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) * strength;
-        const y = (e.clientY - rect.top - rect.height / 2) * strength;
-        e.currentTarget.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translate(0px, 0px) scale(1)";
-      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
@@ -123,44 +83,15 @@ export const RevealText: React.FC<{
   delay?: number;
 }> = ({ text, className = "", delay = 0 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  // Анимация отключена для оптимизации
+  // const isInView = useInView(ref, { once: true });
 
   return (
     <div ref={ref} className={className} style={{ overflow: 'hidden' }}>
-      <motion.div
-        initial={{ y: '100%' }}
-        animate={isInView ? { y: 0 } : { y: '100%' }}
-        transition={{ 
-          duration: 0.8, 
-          delay,
-          ease: [0.25, 0.1, 0.25, 1] 
-        }}
-      >
+      <div>
         {text}
-      </motion.div>
+      </div>
     </div>
-  );
-};
-
-// Smooth morphing shapes
-export const MorphingShape: React.FC<{ className?: string }> = ({ className = "" }) => {
-  return (
-    <motion.div
-      className={className}
-      animate={{
-        borderRadius: [
-          "20% 80% 80% 20%",
-          "80% 20% 20% 80%", 
-          "20% 80% 80% 20%"
-        ],
-        rotate: [0, 180, 360]
-      }}
-      transition={{
-        duration: 8,
-        ease: "linear",
-        repeat: Infinity
-      }}
-    />
   );
 };
 
@@ -172,11 +103,12 @@ export const ScrollReveal: React.FC<{
   className?: string;
 }> = ({ children, direction = 'up', distance = 100, className = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    once: true, 
-    margin: "-10%",
-    amount: 0.3
-  });
+  // Анимация отключена для оптимизации
+  // const isInView = useInView(ref, { 
+  //   once: true, 
+  //   margin: "-10%",
+  //   amount: 0.3
+  // });
 
   const getInitialPosition = () => {
     switch (direction) {
@@ -188,18 +120,11 @@ export const ScrollReveal: React.FC<{
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
       className={className}
-      initial={{ ...getInitialPosition(), opacity: 0 }}
-      animate={isInView ? { x: 0, y: 0, opacity: 1 } : {}}
-      transition={{ 
-        duration: 0.8, 
-        ease: [0.25, 0.1, 0.25, 1],
-        opacity: { duration: 0.6 }
-      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };

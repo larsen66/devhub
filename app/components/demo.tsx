@@ -3,7 +3,6 @@ import { useTheme } from "next-themes"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { GridPatternCard, GridPatternCardBody } from "./ui/grid-pattern-card"
-import DecryptedText from "./DecryptedText"
 
 export function Demo({ isDesktop }: { isDesktop: boolean }) {
 	const { theme } = useTheme()
@@ -19,27 +18,14 @@ export function Demo({ isDesktop }: { isDesktop: boolean }) {
 			className="w-full"
 			initial={isDesktop ? { opacity: 0, scale: 0.8 } : { opacity: 0 }}
 			animate={isInView ? (isDesktop ? { opacity: 1, scale: 1 } : { opacity: 1 }) : {}}
-			transition={{ duration: isDesktop ? 2 : 1.5, ease: "easeOut" }}
+			transition={{ duration: isDesktop ? 2 : 1, ease: "easeOut" }}
 		>
 			<div className="mx-auto mt-32 w-full max-w-3xl text-center">
 				<h2 className="text-4xl font-bold text-foreground sm:text-5xl mb-6">
 					Our Expertise
 				</h2>
 				<p className="text-base text-zinc-500 dark:text-zinc-400 mb-12">
-					<DecryptedText
-						text={"We transform your ideas into high-performance web "}
-						animateOn="view"
-						sequential={true}
-						speed={50}
-						maxIterations={0}
-					/>
-					<DecryptedText
-						text={"and mobile applications using a modern, scalable tech stack."}
-						animateOn="view"
-						sequential={true}
-						speed={50}
-						maxIterations={0}
-					/>
+					We transform your ideas into high-performance web and mobile applications using a modern, scalable tech stack.
 				</p>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -74,7 +60,7 @@ export function Demo({ isDesktop }: { isDesktop: boolean }) {
 				<div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#000022,transparent_70%)] before:opacity-40" />
 				<div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-zinc-900/20 dark:border-white/20 bg-white dark:bg-zinc-900" />
 				<Sparkles
-					density={isDesktop ? 1200 : 400}
+					density={isDesktop ? 1200 : 200}
 					className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(circle_at_50%_50%,white,transparent_85%)]"
 					color={theme === "dark" ? "#ffffff" : "#3b82f6"}
 				/>

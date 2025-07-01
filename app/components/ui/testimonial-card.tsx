@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export interface TestimonialAuthor {
   name: string
@@ -26,6 +27,14 @@ export function TestimonialCard({
       <div className="flex flex-col">
         <p className="font-semibold text-foreground text-xs whitespace-normal">{author.name}</p>
       </div>
+      <Image
+        src={author.avatarUrl}
+        alt={author.name}
+        width={48}
+        height={48}
+        className="rounded-full"
+        loading="lazy"
+      />
     </div>
   )
 
