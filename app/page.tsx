@@ -94,18 +94,22 @@ export default function Home() {
       <div className="py-16 md:py-24">
         <Demo />
       </div>
-      <ScrollSection id="projects" className="relative z-10 -mt-32 w-full flex flex-col items-center justify-center pb-40">
-        <h2 className="pb-20 pt-0 z-10 text-3xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-4xl md:text-5xl whitespace-nowrap bg-clip-text">
-          Projects
-        </h2>
-        <Carousel autoplay loop baseWidth={600} baseHeight={400} />
-      </ScrollSection>
+      <div id="projects">
+        <ScrollSection className="relative z-10 -mt-32 w-full flex flex-col items-center justify-center pb-40">
+          <h2 className="pb-20 pt-0 z-10 text-3xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-4xl md:text-5xl whitespace-nowrap bg-clip-text">
+            Projects
+          </h2>
+          <Carousel autoplay loop baseWidth={600} baseHeight={400} />
+        </ScrollSection>
+      </div>
 
       <Testimonials />
 
-      <ContactSection id="contact" className="py-32 pb-40">
-        <ContactForm />
-      </ContactSection>
+      <div id="contact">
+        <ContactSection className="pt-0 pb-4">
+          <ContactForm />
+        </ContactSection>
+      </div>
     </div>
   );
 }
