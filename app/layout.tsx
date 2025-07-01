@@ -8,6 +8,7 @@ import { DesktopOnly } from "./components/desktop-only";
 import Particles from "./components/particles";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://chronark.com"),
   title: {
     default: "DevHub",
     template: "%s | DevHub",
