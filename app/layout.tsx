@@ -3,19 +3,22 @@ import { Inter } from "@next/font/google";
 import LocalFont from "@next/font/local";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
+import Particles from "./components/particles";
+import { SpotlightCursor } from "./components/spotlight-cursor";
+import { DesktopOnly } from "./components/desktop-only";
 
 export const metadata: Metadata = {
   title: {
-    default: "chronark.com",
-    template: "%s | chronark.com",
+    default: "DevHub",
+    template: "%s | DevHub",
   },
   description: "Co-founder of unkey.dev and founder of planetfall.io",
   openGraph: {
-    title: "chronark.com",
+    title: "DevHub",
     description:
       "Co-founder of unkey.dev and founder of planetfall.io",
     url: "https://chronark.com",
-    siteName: "chronark.com",
+    siteName: "DevHub",
     images: [
       {
         url: "https://chronark.com/og.png",
@@ -38,7 +41,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Chronark",
+    title: "DevHub",
     card: "summary_large_image",
   },
   icons: {
@@ -65,11 +68,17 @@ export default function RootLayout({
       <head>
         <Analytics />
       </head>
-      <body
-        className={`bg-black ${process.env.NODE_ENV === "development" ? "debug-screens" : undefined
-          }`}
-      >
-        {children}
+      <body className="bg-black">
+        <DesktopOnly>
+          <SpotlightCursor />
+        </DesktopOnly>
+        <Particles
+          className="absolute inset-0 -z-10 animate-fade-in"
+          quantity={100}
+        />
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   );

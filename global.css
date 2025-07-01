@@ -3,8 +3,185 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 90%;
+    --radius: 0.75rem;
+    --gradient-color: #8350e8;
+    --sparkles-color: #8350e8;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 90%;
+    --gradient-color: #8350e8;
+    --sparkles-color: #ffffff;
+  }
+
   .text-edge-outline {
     -webkit-text-stroke: 1px rgba(255,255,255,0.3);
   }
+
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply dark;
+    /* Disable default smooth scroll for custom implementation */
+    scroll-behavior: auto;
+    overflow-x: hidden;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Scroll animation keyframes */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(100px) scale(0.9);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes fade-out-up {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.8);
+      filter: blur(10px);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100px) scale(0.9);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100px) scale(0.9);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  /* Base classes for scroll animations */
+  .scroll-section {
+    opacity: 0;
+    transform: translateY(100px) scale(0.9);
+    filter: blur(5px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-section.animate-in {
+    animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hero-section {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Hero text elements individual transitions */
+  .hero-section h1 {
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-section nav {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-subtext {
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-line {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Optimized transitions for hero text elements */
+  .hero-section h1, 
+  .hero-section h2, 
+  .hero-section h3, 
+  .hero-section h4, 
+  .hero-section h5, 
+  .hero-section h6, 
+  .hero-section p, 
+  .hero-section span, 
+  .hero-section a, 
+  .hero-section li, 
+  .hero-section div {
+    will-change: transform, opacity, filter;
+    transition: none; /* Remove transitions for JS-controlled animations */
+  }
+
+  /* Performance optimizations */
+  .scroll-section {
+    will-change: transform, opacity, filter;
+    contain: layout style paint;
+  }
+
+  .contact-section {
+    contain: layout style paint;
+  }
+
 } 
 
