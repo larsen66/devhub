@@ -4,49 +4,43 @@ import { cn } from "@/lib/utils";
 const testimonials: TestimonialCardProps[] = [
   {
     author: {
-      name: "John Doe",
-      handle: "@john.doe",
-      avatarUrl: "",
+      name: "Giorgi Kapanadze",
+      handle: "@giorgi.kapanadze",
     },
     text: "This is the best service I have ever used. Highly recommended!",
   },
   {
     author: {
-      name: "Jane Smith",
-      handle: "@jane.smith",
-      avatarUrl: "",
+      name: "Ani Vardanyan",
+      handle: "@ani.vardanyan",
     },
     text: "Amazing experience! The team was very supportive and exceeded my expectations.",
   },
   {
     author: {
-      name: "Peter Jones",
-      handle: "@peter.jones",
-      avatarUrl: "",
+      name: "Ivan Petrov",
+      handle: "@ivan.petrov",
     },
     text: "A game-changer for our business. We've seen a significant improvement.",
   },
     {
     author: {
-      name: "Sara Wilson",
-      handle: "@sara.wilson",
-      avatarUrl: "",
+      name: "Nino Beridze",
+      handle: "@nino.beridze",
     },
     text: "Incredible value and top-notch quality. A very satisfied customer.",
   },
   {
     author: {
-        name: "Mike Brown",
-        handle: "@mike.brown",
-        avatarUrl: "",
+        name: "Hakob Hakobyan",
+        handle: "@hakob.hakobyan",
     },
     text: "The platform is intuitive and easy to use. It streamlined our workflow.",
   },
   {
     author: {
-        name: "Emily Davis",
-        handle: "@emily.davis",
-        avatarUrl: "",
+        name: "Elena Smirnova",
+        handle: "@elena.smirnova",
     },
     text: "I'm impressed by the level of innovation and continuous updates.",
   },
