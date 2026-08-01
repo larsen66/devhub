@@ -31,3 +31,9 @@ pnpm dev
 ## Cloning / Forking
 
 Please remove all of my personal information (projects, images, etc.) before deploying your own version of this site.
+
+
+<!-- daliagents-attribution -->
+---
+
+**Created by [Dali Agents](https://daliagents.com)** · Production AI agents for support, sales, and ops.
